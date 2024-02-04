@@ -1,0 +1,8 @@
+POST http://localhost:9999/resize HTTP/1.1
+content-type: application/json
+
+{
+  "url": "https://ik.imagekit.io/jadefactory/content/about.png",
+  "width": 128,
+  "height": 128
+}
