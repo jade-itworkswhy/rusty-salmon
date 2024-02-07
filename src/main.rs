@@ -2,19 +2,18 @@ use axum::{
     routing::{get, post},
     Router,
 };
-use dotenv::dotenv;
+use dotenvy::dotenv;
 use hyper::Method;
 use log::info;
 use std::env;
 use tower_http::cors::{Any, CorsLayer};
 
-#[path = "util/resizer.rs"]
-mod util_resizer;
+mod utils;
 
 #[tokio::main]
 async fn main() {
-    // Load environment variables from .env file
-    dotenv().ok();
+    // load environment variables from .env file
+    dotenv().expect(".env file not found");
 
     // Initialize logger
     env_logger::init();
@@ -43,7 +42,7 @@ async fn main() {
 
     let app = Router::new()
         .route("/health", get(|| async { "Hello, World!" }))
-        .route("/resize", post(util_resizer::resize_image))
+        .route("/resize", post(utils::resizer::resize_image))
         .layer(cors);
 
     // run our app with hyper, listening globally on port
